@@ -1,6 +1,22 @@
 For this workshop. We will demonstration enhance security on docker
 
-Part1: Content Trust (Signed Image)
+Part1: Apparmor in Container
+-----------------------------------------------------------------------------------------------------------------
+1. Run container for test default profile of Apparmor by command: "docker container run -dt --name sectestdefault labdocker/alpine:latest sh"
+
+2. Access in to container and test create file on /tmp:
+	docker container exec -it sectestdefault sh
+	touch /tmp/testcreatefile
+	ls -hl /tmp | grep test
+
+3. Test write file on /proc (prohibit path):
+	touch /proc/testprohibitfile
+	cp /tmp/testcreatefile /proc/testprohibitfile
+	ls -hl /proc | grep test
+
+4. Stop test container by command: "docker container stop sectestdefault"
+
+Part2: Content Trust (Signed Image)
 -----------------------------------------------------------------------------------------------------------------
 1. Enable content trust feature by command:
 export DOCKER_CONTENT_TRUST=1
