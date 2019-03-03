@@ -7,7 +7,7 @@ Pull image
 6. docker image pull for lab day 2
     docker image pull labdocker/mariadb:latest    
     docker image pull labdocker/alpinepython:2.7-onbuild
-    docker image pull labdocker/linenotify:bot_v1
+    docker image pull labdocker/linenotify:bot_v2
     docker image pull labdocker/cluster:webservicelite
 7. Check history of image by command: 
     docker image history labdocker/alpine:latest
