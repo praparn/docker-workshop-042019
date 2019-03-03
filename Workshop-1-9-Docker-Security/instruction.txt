@@ -4,18 +4,52 @@ Part1: Apparmor in Container
 -----------------------------------------------------------------------------------------------------------------
 1. Run container for test default profile of Apparmor by command: "docker container run -dt --name sectestdefault labdocker/alpine:latest sh"
 
-2. Access in to container and test create file on /tmp:
+2. Access in to container and test some activity:
 	docker container exec -it sectestdefault sh
-	touch /tmp/testcreatefile
-	ls -hl /tmp | grep test
+	ping 1.1.1.1
+	apk update
+	apk add curl
+	curl https://www.google.com
 
 3. Test write file on /proc (prohibit path):
-	touch /proc/testprohibitfile
+	touch /tmp/testcreatefile1
+	touch /home/testcreatefile2
+	touch /etc/testcreatefile3
+	touch /proc/testcreatefile4
 	cp /tmp/testcreatefile /proc/testprohibitfile
 	ls -hl /proc | grep test
 
-4. Stop test container by command: "docker container stop sectestdefault"
+4. Stop test container by command: "docker container stop sectestdefault && docker container rm sectestdefault"
 
+5. Copy profile and Load apparmor restrict profile by command:
+	sudo apparmor_parser -r -W ~/docker-workshop-042019/Workshop-1-9-Docker-Security/restrict-apparmor
+
+6. Check current profile of apparmor by command: sudo aa-status
+
+7. Run container for test restrict profile of Apparmor by command:
+	docker container run -dt --name sectestrestrict --security-opt "apparmor=restrict-apparmor" labdocker/alpine:latest sh
+
+8. Access in to container and test some activity:
+	docker container exec -it sectestrestrict sh
+	ping 1.1.1.1
+	apk update
+	apk add curl
+	curl https://www.google.com
+
+9. Test write file on /proc (prohibit path):
+	touch /tmp/testcreatefile1
+	touch /home/testcreatefile2
+	touch /etc/testcreatefile3
+	touch /proc/testcreatefile4
+	cp /tmp/testcreatefile /proc/testprohibitfile
+	ls -hl /proc | grep test
+
+10. Stop test container by command: "docker container stop sectestrestrict && docker container rm sectestrestrict"
+
+11. Remove apparmor profile by command: sudo apparmor_parser -R ~/docker-workshop-042019/Workshop-1-9-Docker-Security/restrict-apparmor && sudo aa-status
+
+
+-----------------------------------------------------------------------------------------------------------------
 Part2: Content Trust (Signed Image)
 -----------------------------------------------------------------------------------------------------------------
 1. Enable content trust feature by command:
