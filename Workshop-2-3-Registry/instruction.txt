@@ -133,12 +133,3 @@ Registry on multihost docker-machine
 22. (Teacher Machine) Cleanup by command:
 	docker container stop registrylab
 	docker container rm -v registrylab
-
-===================================
-Specia: Harbor Registry
-===================================
-1. Download binary of harbor registry by command:
-cd ~
-wget https://github.com/goharbor/harbor/archive/v1.7.3.tar.gz
-
-2. 
