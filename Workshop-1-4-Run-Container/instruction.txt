@@ -54,7 +54,6 @@ e0790d46c800        labdocker/alpineweb:latest   "node hello.js"     6 seconds a
 	4.1 Create docker on detach mode with command
 	docker container create -t --name python -p 5000:5000 labdocker/cluster:webservicelite
 
-
 	4.2 Check container exist and run container with command:
 	docker container ls -a
 	docker container start python
